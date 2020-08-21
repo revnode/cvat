@@ -51,6 +51,13 @@ function DrawShapePopoverComponent(props: Props): JSX.Element {
         onChangeCuboidDrawingMethod,
     } = props;
 
+    if(shapeType === ShapeType.POLYLINE && numberOfPoints !== 2)
+    {
+        onChangePoints(Math.floor(
+            clamp(2, minimumPoints, Number.MAX_SAFE_INTEGER),
+        ));
+    }
+
     return (
         <div className='cvat-draw-shape-popover-content'>
             <Row type='flex' justify='start'>
@@ -159,7 +166,7 @@ function DrawShapePopoverComponent(props: Props): JSX.Element {
                 )
             }
             {
-                shapeType !== ShapeType.RECTANGLE && shapeType !== ShapeType.CUBOID && (
+                shapeType !== ShapeType.RECTANGLE && shapeType !== ShapeType.CUBOID && shapeType !== ShapeType.POLYLINE && (
                     <Row type='flex' justify='space-around' align='middle'>
                         <Col span={14}>
                             <Text className='cvat-text-color'> Number of points: </Text>
